@@ -8,12 +8,12 @@ const PORT = process.env.PORT || 3000;
 module.exports = {
     bindingAddress: '0.0.0.0',
     port: PORT,
-    crossDomainPort: 8081,
+    crossDomainPort: PORT,
     publicDir: path.join(__dirname, '../public'), // set to null to disable
     enableWorkers,
     workers: os.cpus().length,
     ssl: null,
-    getServerInfo: () => ({ hostname: 'localhost', port: PORT, crossDomainPort: 8081, protocol: 'http:' }),
+    getServerInfo: () => ({ hostname: '0.0.0.0', port: PORT, crossDomainPort: PORT, protocol: 'http:' }),
     password: null,
     disableLocalStorageSync: false,
     restrictSessionToIP: false,
@@ -41,9 +41,5 @@ module.exports = {
     
     getIP: (req) => req.socket.remoteAddress
 };
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
-
 
 if (fs.existsSync(path.join(__dirname, '../config.js'))) Object.assign(module.exports, require('../config'));
