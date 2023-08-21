@@ -12,7 +12,7 @@ module.exports = {
     bindingAddress: '0.0.0.0',
     port: 8080,
     crossDomainPort: 8081,
-    publicDir: null, // set to null to disable
+    publicDir: path.join(__dirname, '../public'), // set to null to disable
 
     // enable or disable multithreading
     enableWorkers,
@@ -25,11 +25,11 @@ module.exports = {
     // this function's return object will determine how the client url rewriting will work.
     // set them differently from bindingAddress and port if rammerhead is being served
     // from a reverse proxy.
-    getServerInfo: () => ({ hostname: 'www.poshmark.deals', port: 8080, crossDomainPort: 8081, protocol: 'http:' }),
+   // getServerInfo: () => ({ hostname: 'www.poshmark.deals', port: 8080, crossDomainPort: 8081, protocol: 'http:' }),
     // example of non-hard-coding the hostname header
-    // getServerInfo: (req) => {
-    //     return { hostname: new URL('http://' + req.headers.host).hostname, port: 443, crossDomainPort: 8443, protocol: 'https: };
-    // },
+     getServerInfo: (req) => {
+         return { hostname: new URL('http://' + req.headers.host).hostname, port: 443, crossDomainPort: 8443, protocol: 'https: };
+     },
 
     // enforce a password for creating new sessions. set to null to disable
     password: null,
@@ -38,7 +38,7 @@ module.exports = {
     disableLocalStorageSync: false,
 
     // restrict sessions to be only used per IP
-    restrictSessionToIP: true,
+    restrictSessionToIP: false,
 
     // caching options for js rewrites. (disk caching not recommended for slow HDD disks)
     // recommended: 50mb for memory, 5gb for disk
@@ -68,7 +68,7 @@ module.exports = {
         cacheCheckInterval: 1000 * 60 * 10, // 10 minutes
         deleteUnused: true,
         staleCleanupOptions: {
-            staleTimeout: 1000 * 60 * 60 * 24 * 3, // 3 days
+            staleTimeout: 1000 * 60 * 60 * 24 * 7, // 3 days
             maxToLive: null,
             staleCheckInterval: 1000 * 60 * 60 * 6 // 6 hours
         },
@@ -79,7 +79,7 @@ module.exports = {
     //// LOGGING CONFIGURATION ////
 
     // valid values: 'disabled', 'debug', 'traffic', 'info', 'warn', 'error'
-    logLevel: process.env.DEVELOPMENT ? 'debug' : 'info',
+    logLevel: process.env.DEVELOPMENT ? 'disabled' : 'info',
     generatePrefix: (level) => `[${new Date().toISOString()}] [${level.toUpperCase()}] `,
 
     // logger depends on this value
