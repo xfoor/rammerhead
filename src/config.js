@@ -41,5 +41,9 @@ module.exports = {
     
     getIP: (req) => req.socket.remoteAddress
 };
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
+
 
 if (fs.existsSync(path.join(__dirname, '../config.js'))) Object.assign(module.exports, require('../config'));
