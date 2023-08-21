@@ -4,16 +4,16 @@ const os = require('os');
 const RammerheadJSMemCache = require('./classes/RammerheadJSMemCache.js');
 const RammerheadJSFileCache = require('./classes/RammerheadJSFileCache.js');
 const enableWorkers = os.cpus().length !== 1;
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 module.exports = {
     bindingAddress: '0.0.0.0',
     port: PORT,
-    crossDomainPort: PORT,
+    crossDomainPort: 8081,
     publicDir: path.join(__dirname, '../public'), // set to null to disable
     enableWorkers,
     workers: os.cpus().length,
     ssl: null,
-    getServerInfo: () => ({ hostname: '0.0.0.0', port: PORT, crossDomainPort: PORT, protocol: 'http:' }),
+    getServerInfo: () => ({ hostname: '0.0.0.0', port: PORT, crossDomainPort: 8081, protocol: 'http:' }),
     password: null,
     disableLocalStorageSync: false,
     restrictSessionToIP: false,
